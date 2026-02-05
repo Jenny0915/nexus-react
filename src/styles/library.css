@@ -1,0 +1,120 @@
+.library-page {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.library-sidebar {
+  border: 1px solid #e8edf5;
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+  position: sticky;
+  top: 12px;
+}
+
+.library-content {
+  min-width: 0;
+}
+
+.lib-search input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #dbe5f3;
+  border-radius: 10px;
+}
+
+.lib-section {
+  margin-top: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.lib-section select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #dbe5f3;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.lib-check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.lib-clear {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid #dbe5f3;
+  background: #f6f7fb;
+  cursor: pointer;
+}
+
+.lib-cats {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: grid;
+  gap: 6px;
+}
+
+.lib-cats button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+}
+
+.lib-cats button.active {
+  background: #eef5ff;
+  border-color: #cfe2ff;
+  font-weight: 600;
+}
+
+.lib-grid {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.lib-card {
+  border: 1px solid #e8edf5;
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+}
+
+.lib-card-title a {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lib-meta {
+  margin-top: 6px;
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+
+.lib-price {
+  margin-top: 8px;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .library-page {
+    grid-template-columns: 1fr;
+  }
+  .library-sidebar {
+    position: static;
+  }
+}
