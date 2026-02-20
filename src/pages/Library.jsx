@@ -1,3 +1,4 @@
+// src/pages/Library.jsx
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/library.css";
@@ -5,18 +6,15 @@ import { api } from "../api/apiClient";
 import { useApi } from "../hooks/useApi";
 
 export default function Library() {
-  // 1) Traemos TODO una vez
   const itemsReq = useApi(() => api.get("/itemslib"), []);
   const items = Array.isArray(itemsReq.data) ? itemsReq.data : [];
 
-  // 2) Estados UI (sidebar/filtros)
   const [categoria, setCategoria] = useState("Todas");
   const [anio, setAnio] = useState("Todos");
-  const [tipo, setTipo] = useState("Todos"); // libro | revista
+  const [tipo, setTipo] = useState("Todos");
   const [q, setQ] = useState("");
   const [onlyMasVendido, setOnlyMasVendido] = useState(false);
 
-  // 3) Opciones del sidebar (salen del API)
   const categorias = useMemo(() => {
     const set = new Set(items.map((i) => i.categoria).filter(Boolean));
     return ["Todas", ...Array.from(set).sort((a, b) => a.localeCompare(b))];
@@ -30,16 +28,13 @@ export default function Library() {
 
   const tipos = ["Todos", "libro", "revista"];
 
-  // 4) Filtrado en front (cumple sidebar + filtros)
   const filtered = useMemo(() => {
     const qq = q.trim().toLowerCase();
-
     return items.filter((i) => {
       if (categoria !== "Todas" && i.categoria !== categoria) return false;
       if (anio !== "Todos" && String(i["año"]) !== String(anio)) return false;
       if (tipo !== "Todos" && i.tipo !== tipo) return false;
       if (onlyMasVendido && !i.masVendido) return false;
-
       if (qq) {
         const t = (i.titulo || "").toLowerCase();
         const a = (i.autor || "").toLowerCase();
@@ -52,34 +47,30 @@ export default function Library() {
   return (
     <div className="library-page">
       <aside className="library-sidebar">
-        <h2>Categorías</h2>
+        <h2>Filtros</h2>
 
         <div className="lib-search">
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Buscar por título o autor…"
+            placeholder="Buscar título o autor..."
           />
         </div>
 
         <div className="lib-section">
-          <label>Año</label>
+          <label>Publicación (Año)</label>
           <select value={anio} onChange={(e) => setAnio(e.target.value)}>
             {anios.map((y) => (
-              <option key={String(y)} value={y}>
-                {y}
-              </option>
+              <option key={String(y)} value={y}>{y}</option>
             ))}
           </select>
         </div>
 
         <div className="lib-section">
-          <label>Tipo</label>
+          <label>Tipo de Recurso</label>
           <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
             {tipos.map((t) => (
-              <option key={t} value={t}>
-                {t === "Todos" ? "Todos" : t}
-              </option>
+              <option key={t} value={t}>{t === "libro" ? "Libro" : t === "revista" ? "Revista" : "Todos"}</option>
             ))}
           </select>
         </div>
@@ -91,7 +82,7 @@ export default function Library() {
               checked={onlyMasVendido}
               onChange={(e) => setOnlyMasVendido(e.target.checked)}
             />
-            Solo “más vendidos”
+            Solo Destacados
           </label>
         </div>
 
@@ -110,8 +101,11 @@ export default function Library() {
           </button>
         </div>
 
-        <hr />
-
+        <hr style={{ margin: '20px 0', opacity: 0.1 }} />
+        
+        <label style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--nexus-muted)', textTransform: 'uppercase' }}>
+          Categorías
+        </label>
         <ul className="lib-cats">
           {categorias.map((c) => (
             <li key={c}>
@@ -128,32 +122,42 @@ export default function Library() {
       </aside>
 
       <section className="library-content">
-        <h1>Librería</h1>
+        <h1>Explorar Catálogo</h1>
 
-        {itemsReq.loading && <p>Cargando items…</p>}
+        {itemsReq.loading && <div className="loading-state">Cargando catálogo de Nexus...</div>}
+        
         {itemsReq.error && (
-          <p style={{ color: "crimson" }}>Error cargando items.</p>
+          <div className="error-state">No pudimos cargar los libros. Revisa tu conexión.</div>
         )}
 
         {!itemsReq.loading && (
-          <p style={{ opacity: 0.75, marginTop: 6 }}>
-            Mostrando {filtered.length} de {items.length}
+          <p className="results-count">
+            Resultados: <strong>{filtered.length}</strong> recursos encontrados
           </p>
         )}
 
         <ul className="lib-grid">
           {filtered.map((item) => (
             <li key={item.id} className="lib-card">
-              <div className="lib-card-title">
-                <Link to={`/library/${item.id}`}>{item.titulo}</Link>
+              <div>
+                <div className="lib-card-title">
+                  <Link to={`/library/${item.id}`}>{item.titulo}</Link>
+                </div>
+
+                <div className="lib-meta">
+                  <strong>{item.autor}</strong><br />
+                  {item.categoria} • {item["año"]}
+                </div>
               </div>
 
-              <div className="lib-meta">
-                {item.autor} · {item.categoria} · {item["año"]} · {item.tipo}
-              </div>
-
-              <div className="lib-price">
-                ${Number(item.precio || 0).toLocaleString("es-CO")}
+              <div>
+                <div className="lib-price">
+                  ${Number(item.precio || 0).toLocaleString("es-CO")}
+                </div>
+                {/* Botón añadido para mejor UX */}
+                <Link to={`/library/${item.id}`} className="lib-clear" style={{ display: 'block', textAlign: 'center', textDecoration: 'none', marginTop: '10px', background: 'var(--nexus-blue)', color: 'white' }}>
+                  Ver Detalle
+                </Link>
               </div>
             </li>
           ))}

@@ -9,7 +9,7 @@ import FloorPlan from "../components/coworking/FloorPlan";
 import WeeklyCalendar from "../components/coworking/WeeklyCalendar";
 import ReserveModal from "../components/coworking/ReserveModal";
 
-/* Helpers para construir ISO (demo) */
+// Funciones auxiliares para fechas
 function isoFromWeek(inicioSemana, dayIndex, hhmm) {
   const [y, m, d] = inicioSemana.split("-").map(Number);
   const [hh, mm] = hhmm.split(":").map(Number);
@@ -25,41 +25,35 @@ function addOneHourISO(iso) {
 }
 
 export default function CoworkingReservas() {
-  // 1) Traemos los espacios reales del API
+  // Criterio 6: Petición GET a la API simulada para obtener espacios
   const spacesReq = useApi(
-  () => api.get("/coworkingnew/spaces", { params: { detalle: 1 } }),
-  []
-);
+    () => api.get("/coworkingnew/spaces", { params: { detalle: 1 } }),
+    []
+  );
 
   const spaces = Array.isArray(spacesReq.data) ? spacesReq.data : [];
-
   const grouped = useMemo(() => groupSpaces(spaces), [spaces]);
-
-  // 2) Espacio seleccionado
   const [selected, setSelected] = useState(null);
 
-  // 3) Agenda del espacio seleccionado (se pide al endpoint agenda-semanal)
+  // Petición a la API simulada para obtener la agenda del espacio seleccionado
   const agendaReq = useApi(
-    () =>
-      selected
-        ? coworkingApi.get(`/coworkingnew/spaces/${selected.id}/agenda-semanal`, {
-            params: { inicioSemana: "2025-12-01" },
-          })
-        : Promise.resolve({ data: null }),
+    () => selected
+      ? coworkingApi.get(`/coworkingnew/spaces/${selected.id}/agenda-semanal`, {
+          params: { inicioSemana: "2025-12-01" },
+        })
+      : Promise.resolve({ data: null }),
     [selected?.id]
   );
 
-  // 4) Copia editable de agenda (para marcar ocupado en el front tras reservar)
   const [agendaData, setAgendaData] = useState(null);
   useEffect(() => {
     setAgendaData(agendaReq.data || null);
   }, [agendaReq.data]);
 
-  // 5) Modal + slot seleccionado
   const [modalOpen, setModalOpen] = useState(false);
-  const [pickedSlot, setPickedSlot] = useState(null); // {diaIndex, dia, hora}
+  const [pickedSlot, setPickedSlot] = useState(null);
 
-  // Selección inicial: primera mesa si existe
+  // Selección inicial por defecto (Mesas)
   useEffect(() => {
     if (!selected && grouped.mesas.length > 0) setSelected(grouped.mesas[0]);
   }, [selected, grouped.mesas]);
@@ -69,6 +63,7 @@ export default function CoworkingReservas() {
     setModalOpen(true);
   }
 
+  // Criterio 6: Petición POST a la API simulada para CREAR la reserva
   async function confirmReservation(form) {
     if (!selected || !agendaData || !pickedSlot) return;
 
@@ -76,21 +71,22 @@ export default function CoworkingReservas() {
     const desdeISO = isoFromWeek(inicioSemana, pickedSlot.diaIndex, pickedSlot.hora);
     const hastaISO = addOneHourISO(desdeISO);
 
-    // POST real (demo)
+    // Estructura de datos que se envía al servidor (Back-end simulado)
     const body = {
       idUsuario: 1,
       idEspacio: selected.id,
       desde: desdeISO,
       hasta: hastaISO,
-      nombreCompleto: form.fullName,
-      correo: form.email,
-      telefono: form.phone,
+      nombreCompleto: form.fullName, // Viene del input del modal
+      correo: form.email,          // Viene del input del modal
+      telefono: form.phone,        // Viene del input del modal
     };
 
     try {
+      // LLAMADA A LA API
       await api.post("/coworkingnew/reservations", body);
-
-      // Marcamos el slot como ocupado en UI
+      
+      // Si el servidor responde OK, actualizamos la vista localmente (Optimistic UI)
       setAgendaData((prev) => {
         if (!prev?.slots?.[pickedSlot.hora]) return prev;
         const next = structuredClone(prev);
@@ -99,13 +95,14 @@ export default function CoworkingReservas() {
       });
 
       setModalOpen(false);
-      alert("Reserva creada (demo).");
-    } catch {
-      alert("No se pudo crear la reserva (mock).");
+      alert(`¡Reserva confirmada con éxito para ${form.fullName}!`);
+    } catch (error) {
+      console.error("Error al guardar en la API:", error);
+      alert("No se pudo conectar con el servidor para crear la reserva.");
     }
   }
 
-  // Horario “bonito”: lo sacamos del JSON (primera hora - última hora)
+  // Cálculo del rango horario para mostrar en la info
   const horario = useMemo(() => {
     if (!agendaData?.franjas?.length) return "—";
     const first = agendaData.franjas[0]?.horas?.[0] || "—";
@@ -117,53 +114,51 @@ export default function CoworkingReservas() {
   return (
     <div className="nexus-page reservas-page">
       <div className="reservas-wrap">
-        {/* Panel izquierdo */}
+        
+        {/* PANEL IZQUIERDO: PLANO (Criterio 1 y 2: Responsivo) */}
         <aside className="panel">
-          <h2 className="panel-title">Plano del Espacio (API)</h2>
-
-          {spacesReq.loading && <p>Cargando espacios…</p>}
-          {spacesReq.error && <p style={{ color: "crimson" }}>Error cargando espacios.</p>}
-
-          {!spacesReq.loading && (
-            <FloorPlan
-              grouped={grouped}
-              selectedId={selected?.id}
-              onSelect={(s) => setSelected(s)}
-            />
-          )}
+          <h2 className="panel-title">Plano del Espacio</h2>
+          {spacesReq.loading && <p>Cargando espacios...</p>}
+          <div className="floor-plan-container">
+            {!spacesReq.loading && (
+              <FloorPlan
+                grouped={grouped}
+                selectedId={selected?.id}
+                onSelect={(s) => setSelected(s)}
+              />
+            )}
+          </div>
         </aside>
 
-        {/* Panel derecho */}
+        {/* PANEL DERECHO: CALENDARIO (Operatividad) */}
         <section className="panel">
           <h2 className="panel-title">
-            Calendario Semanal — <span style={{ opacity: 0.75 }}>{selected ? selected.nombre : "—"}</span>
+            Disponibilidad — <span style={{ color: 'var(--personal)' }}>{selected ? selected.nombre : "—"}</span>
           </h2>
 
-          {/* Ficha flotante */}
           {selected && (
-            <section className="space-info">
+            <div className="space-info">
               <div className="space-info-row">
-                <p><strong>Capacidad:</strong> {selected.capacidad}</p>
+                <p><strong>Capacidad:</strong> {selected.capacidad} personas</p>
                 <p><strong>Horario:</strong> {horario}</p>
-                <p><strong>Estado:</strong> {selected.ocupado ? "Ocupado" : "Libre"}</p>
               </div>
-
-              <div className="space-info-actions">
-                <span style={{ opacity: 0.8 }}>Elige una hora libre en el calendario.</span>
-              </div>
-            </section>
+              <p style={{ margin: 0, fontSize: '0.9rem', opacity: 0.8 }}>
+                Selecciona una franja verde para realizar tu reserva.
+              </p>
+            </div>
           )}
 
-          {selected && agendaReq.loading && <p>Cargando agenda…</p>}
-          {selected && agendaReq.error && <p style={{ color: "crimson" }}>Error cargando agenda.</p>}
-
-          {agendaData && (
-            <WeeklyCalendar agenda={agendaData} onPickSlot={onPickSlot} />
-          )}
+          {selected && agendaReq.loading && <p>Actualizando disponibilidad...</p>}
+          
+          <div className="calendar-board">
+            {agendaData && (
+              <WeeklyCalendar agenda={agendaData} onPickSlot={onPickSlot} />
+            )}
+          </div>
         </section>
       </div>
 
-      {/* Modal */}
+      {/* MODAL DE RESERVA (Conectado a confirmReservation) */}
       <ReserveModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}

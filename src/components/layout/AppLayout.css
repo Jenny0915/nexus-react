@@ -1,0 +1,226 @@
+/* src/components/layout/AppLayout.css */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--nexus-bg);
+}
+
+/* --- HEADER --- */
+.main-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--nexus-border);
+  padding: 0.75rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.header-logo {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  color: var(--nexus-blue);
+}
+
+/* --- NAVEGACIÓN --- */
+.main-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.main-nav a {
+  font-weight: 500;
+  color: var(--nexus-text);
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.main-nav a:hover {
+  color: var(--nexus-gold);
+}
+
+/* --- ÁREA DE USUARIO --- */
+.auth-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-email {
+  font-size: 0.85rem;
+  color: var(--nexus-muted);
+  font-weight: 500;
+}
+
+.btn-logout {
+  background: #f1f5f9;
+  border: 1px solid var(--nexus-border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--nexus-blue);
+}
+
+.btn-logout:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* --- FOOTER (Estilo imagen Nexus) --- */
+.main-footer {
+  background: var(--nexus-blue);
+  color: #ffffff;
+  padding: 4rem 2rem 1.5rem;
+  margin-top: 4rem;
+}
+
+.footer-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr; /* Columna de branding más ancha */
+  gap: 3rem;
+}
+
+.footer-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.2rem;
+}
+
+.footer-logo {
+  height: 50px;
+  filter: brightness(0) invert(1); /* Pone el logo en blanco */
+}
+
+.logo-text.light {
+  color: #ffffff;
+}
+
+.footer-col h4 {
+  color: var(--nexus-gold);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-col p, .footer-col a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+.footer-col a:hover {
+  color: var(--nexus-gold);
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 3rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* --- RESPONSIVIDAD (Criterio 1 y 2) --- */
+
+.menu-toggle {
+  display: none; /* Oculto en PC */
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: var(--nexus-blue);
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .main-nav {
+    display: none; /* Se oculta el menú normal */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.5rem;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    border-top: 1px solid var(--nexus-border);
+  }
+
+  .main-nav.is-open {
+    display: flex; /* Se muestra al dar clic al hamburguesa */
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-logo-container {
+    justify-content: center;
+  }
+}

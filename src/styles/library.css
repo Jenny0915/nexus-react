@@ -1,120 +1,193 @@
+/* src/styles/library.css */
+
 .library-page {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 18px;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
   align-items: start;
 }
 
 .library-sidebar {
-  border: 1px solid #e8edf5;
-  border-radius: 14px;
-  padding: 14px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 16px;
+  padding: 24px;
   background: #fff;
   position: sticky;
-  top: 12px;
+  top: 100px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
-.library-content {
-  min-width: 0;
+.library-sidebar h2 {
+  color: var(--nexus-blue);
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--nexus-gold);
+  padding-bottom: 8px;
+  display: inline-block;
 }
 
-.lib-search input {
+.library-content h1 {
+  color: var(--nexus-blue);
+  margin-bottom: 0.5rem;
+}
+
+/* Form Elements */
+.lib-search input, .lib-section select {
   width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #dbe5f3;
-  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.lib-search input:focus, .lib-section select:focus {
+  outline: none;
+  border-color: var(--nexus-gold);
 }
 
 .lib-section {
-  margin-top: 12px;
+  margin-top: 18px;
   display: grid;
-  gap: 6px;
+  gap: 8px;
 }
 
-.lib-section select {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #dbe5f3;
-  border-radius: 10px;
-  background: #fff;
+.lib-section label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--nexus-muted);
+  text-transform: uppercase;
 }
 
 .lib-check {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem !important;
+  text-transform: none !important;
+  color: var(--nexus-text) !important;
 }
 
 .lib-clear {
   width: 100%;
-  padding: 9px 10px;
-  border-radius: 10px;
-  border: 1px solid #dbe5f3;
-  background: #f6f7fb;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--nexus-border);
+  background: #f8fafc;
+  color: var(--nexus-blue);
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
+.lib-clear:hover {
+  background: #f1f5f9;
+  border-color: var(--nexus-gold);
+}
+
+/* Categorías List */
 .lib-cats {
   list-style: none;
   padding: 0;
-  margin: 10px 0 0;
+  margin: 15px 0 0;
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 
 .lib-cats button {
   width: 100%;
   text-align: left;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid transparent;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
   background: transparent;
   cursor: pointer;
+  color: var(--nexus-text);
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.lib-cats button:hover {
+  background: #f1f5f9;
+  color: var(--nexus-blue);
 }
 
 .lib-cats button.active {
-  background: #eef5ff;
-  border-color: #cfe2ff;
+  background: var(--nexus-blue);
+  color: white;
   font-weight: 600;
 }
 
+/* --- GRID DE CARDS --- */
 .lib-grid {
   list-style: none;
   padding: 0;
-  margin: 14px 0 0;
+  margin: 20px 0 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 .lib-card {
-  border: 1px solid #e8edf5;
+  border: 1px solid var(--nexus-border);
   border-radius: 14px;
-  padding: 12px;
+  padding: 20px;
   background: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.lib-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  border-color: var(--nexus-gold);
 }
 
 .lib-card-title a {
+  font-size: 1.1rem;
   font-weight: 700;
+  color: var(--nexus-blue);
   text-decoration: none;
 }
 
 .lib-meta {
-  margin-top: 6px;
-  opacity: 0.8;
-  font-size: 0.95rem;
+  margin-top: 10px;
+  color: var(--nexus-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
 }
 
 .lib-price {
-  margin-top: 8px;
-  font-weight: 700;
+  margin-top: 15px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--nexus-text);
 }
 
+/* RESPONSIVIDAD (Criterio 1 y 2) */
 @media (max-width: 900px) {
   .library-page {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
+  
   .library-sidebar {
     position: static;
+    padding: 15px;
+  }
+
+  .lib-cats {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .lib-grid {
+    grid-template-columns: 1fr; /* Una sola columna en teléfonos pequeños */
   }
 }

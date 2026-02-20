@@ -26,7 +26,6 @@ export function useApi(requestFn, deps = []) {
 
     run();
     return () => { alive = false; };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
   return { data, loading, error };

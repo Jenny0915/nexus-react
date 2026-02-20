@@ -53,7 +53,7 @@ function mergeUniqueById(apiList, lsList) {
 export default function Purchases() {
   const userId = 1;
 
-  // ✅ usa tu expectativa: /compras?detalle=1 (y pasamos userId también)
+  // ✅ aquí uso mi expectativa: /compras?detalle=1 (y se pasa userId también)
   const { data, loading, error } = useApi(
     () => api.get("/compras", { params: { detalle: 1, userId } }),
     [userId]
@@ -119,3 +119,4 @@ export default function Purchases() {
     </div>
   );
 }
+    

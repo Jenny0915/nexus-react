@@ -31,7 +31,7 @@ export function groupSpaces(spaces = []) {
 }
 
 export function shortMesaLabel(nombre) {
-  // "Mesa 01 - Ventana" -> "M01"
+  
   const match = nombre.match(/Mesa\s+(\d+)/i);
   return match ? `M${match[1].padStart(2, "0")}` : "M";
 }

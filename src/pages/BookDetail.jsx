@@ -79,7 +79,7 @@ export default function BookDetail() {
 
       const item = book.data;
 
-      // ✅ 1) Body EXACTO del contrato del POST /compras (Apidog)
+      // ✅ 1) Body del contrato del POST /compras (Apidog)
       const bodyApi = {
         userId,
         bookId: Number(id),
@@ -90,7 +90,7 @@ export default function BookDetail() {
       // POST al mock
       const res = await api.post("/compras", bodyApi);
 
-      // ✅ 2) Para el FRONT (localStorage) guardamos lo "bonito"
+      // ✅ 2) Para el FRONT (localStorage) se guarda lo "bonito"
       const fechaHoy = new Date().toISOString().slice(0, 10);
 
       const purchase = {

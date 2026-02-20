@@ -1,15 +1,12 @@
-/* Calendario estilo simple (luego lo dejamos como Nexus) */
 :root{
   --libre:#16A34A;
   --ocupado:#EF4444;
   --border:#e8edf5;
 
-  /* columna horas + días */
   --time-col: 70px;
   --day-col: minmax(0, 1fr);
 }
 
-/* fila de días (7) */
 .days-row{
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -26,12 +23,10 @@
   background: #fff;
 }
 
-/* contenedor */
 .calendar-board{
   overflow-x: hidden;
 }
 
-/* grid: 1 col hora + 7 días */
 .calendar-grid{
   display: grid;
   gap: 8px;
@@ -39,7 +34,6 @@
   align-items: center;
 }
 
-/* barra MAÑANA/TARDE ocupa todo */
 .period-bar{
   grid-column: 1 / -1;
   border: 1px solid rgba(0,0,0,.25);
@@ -50,13 +44,11 @@
   background: #fff;
 }
 
-/* hora */
 .time-cell{
   font-weight: 900;
   padding-left: 6px;
 }
 
-/* slots */
 .slot{
   height: 30px;
   border-radius: 10px;
@@ -68,7 +60,6 @@
 .slot.busy{ border-color: var(--ocupado); }
 .slot.na{ opacity:.45; cursor:not-allowed; }
 
-/* responsive: en móvil compacta un poco */
 @media (max-width: 600px){
   :root{ --time-col: 52px; }
   .slot{ height: 26px; border-radius: 8px; }
