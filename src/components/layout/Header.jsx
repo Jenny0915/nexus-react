@@ -6,7 +6,7 @@ export default function Header() {
     <header className="site-header">
       <div className="site-header__inner">
         <div className="brand">
-          {/* Si luego metes el logo real: reemplaza por <img src={logo} .../> */}
+          {}
           <div className="brand__icon">N</div>
           <div className="brand__name">NEXUS</div>
         </div>

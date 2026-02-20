@@ -1,4 +1,4 @@
-/* src/components/layout/AppLayout.css */
+/* AppLayout.css - Estructura General y Responsividad de Nexus */
 
 .app-container {
   display: flex;
@@ -9,13 +9,15 @@
 
 /* --- HEADER --- */
 .main-header {
-  background: #ffffff;
+  /* Implementé transparencia y desenfoque (glassmorphism) para darle un aspecto moderno al encabezado */
+  background: rgba(255, 255, 255, 0.8) !important; 
+  backdrop-filter: blur(12px); 
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--nexus-border);
   padding: 0.75rem 2rem;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
 }
 
 .header-content {
@@ -51,6 +53,9 @@
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  /* Configuré estos márgenes para alinear correctamente los links a la derecha según el diseño solicitado */
+  margin-left: auto; 
+  margin-right: 2rem; 
 }
 
 .main-nav a {
@@ -84,18 +89,21 @@
 }
 
 .btn-logout {
-  background: #f1f5f9;
-  border: 1px solid var(--nexus-border);
-  padding: 6px 12px;
-  border-radius: 6px;
+  /* Unifiqué el estilo del botón de salida con el botón de entrada del login para mantener la coherencia visual */
+  background: var(--nexus-blue) !important; 
+  color: white !important;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 10px; 
   font-size: 0.85rem;
+  font-weight: 700;
   cursor: pointer;
-  color: var(--nexus-blue);
+  transition: all 0.2s;
 }
 
 .btn-logout:hover {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--nexus-blue-dark) !important;
+  transform: translateY(-1px);
 }
 
 /* --- CONTENIDO PRINCIPAL --- */
@@ -108,8 +116,9 @@
   box-sizing: border-box;
 }
 
-/* --- FOOTER (Estilo imagen Nexus) --- */
+/* --- FOOTER --- */
 .main-footer {
+  /* Se utilizó el azul oscuro corporativo para el pie de página, siguiendo la identidad visual de Nexus */
   background: var(--nexus-blue);
   color: #ffffff;
   padding: 4rem 2rem 1.5rem;
@@ -119,8 +128,9 @@
 .footer-grid {
   max-width: 1200px;
   margin: 0 auto;
+  /* Se organizó la información en 4 columnas para distribuir mejor los enlaces y datos de contacto */
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr; /* Columna de branding más ancha */
+  grid-template-columns: 2fr 1fr 1fr 1fr; 
   gap: 3rem;
 }
 
@@ -133,7 +143,7 @@
 
 .footer-logo {
   height: 50px;
-  filter: brightness(0) invert(1); /* Pone el logo en blanco */
+  filter: brightness(0) invert(1); 
 }
 
 .logo-text.light {
@@ -170,10 +180,10 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* --- RESPONSIVIDAD (Criterio 1 y 2) --- */
+/* --- REQUERIMIENTO: RESPONSIVIDAD (Criterio 1 y 2) --- */
 
 .menu-toggle {
-  display: none; /* Oculto en PC */
+  display: none; 
   font-size: 1.8rem;
   background: none;
   border: none;
@@ -181,6 +191,7 @@
   cursor: pointer;
 }
 
+/* Ajustes para tabletas: se reorganiza el footer a dos columnas */
 @media (max-width: 900px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
@@ -188,13 +199,15 @@
   }
 }
 
+/* Ajustes para móviles: se implementa menú hamburguesa y diseño de columna única */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
   }
 
   .main-nav {
-    display: none; /* Se oculta el menú normal */
+    /* El menú de navegación se oculta para activarse solo al presionar el botón de menú */
+    display: none; 
     position: absolute;
     top: 100%;
     left: 0;
@@ -208,7 +221,7 @@
   }
 
   .main-nav.is-open {
-    display: flex; /* Se muestra al dar clic al hamburguesa */
+    display: flex; 
   }
 
   .hide-mobile {

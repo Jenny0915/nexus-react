@@ -1,32 +1,39 @@
-/* ====== Base layout ====== */
+/* NexusShell.css - Sistema de Diseño y Estructura Global de la SPA */
+
+/* ====== VARIABLES Y LAYOUT BASE ====== */
 .nx-shell {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .nx-main {
+  /* Usamos flex: 1 para asegurar que el footer siempre se mantenga al final 
+     de la página, incluso si hay poco contenido. 
+  */
   flex: 1;
   background: #ffffff;
 }
 
 .nx-container {
-  width: 100%;
+  /* Definí un ancho máximo estándar de 1120px para que el contenido 
+     no se estire demasiado en monitores grandes.
+  */
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 16px;
+  width: 100%;
 }
 
 .nx-page {
   padding: 22px 0 26px;
 }
 
-.nx-muted {
-  opacity: 0.75;
-}
-
-/* ====== Navbar ====== */
+/* ====== BARRA DE NAVEGACIÓN (NAVBAR) ====== */
 .nx-navbar {
+  /* Implementé position sticky para que el usuario siempre tenga 
+     acceso al menú mientras navega por la librería o el coworking.
+  */
   position: sticky;
   top: 0;
   z-index: 50;
@@ -38,8 +45,8 @@
   height: 64px;
   display: flex;
   align-items: center;
-  gap: 18px;
   justify-content: space-between;
+  gap: 18px;
 }
 
 .nx-brand {
@@ -51,6 +58,7 @@
 }
 
 .nx-brand-mark {
+  /* Identidad visual compacta para el logo de Nexus */
   width: 34px;
   height: 34px;
   border-radius: 10px;
@@ -58,11 +66,6 @@
   color: #fff;
   display: grid;
   place-items: center;
-  font-weight: 800;
-}
-
-.nx-brand-text {
-  letter-spacing: 0.22em;
   font-weight: 800;
 }
 
@@ -78,33 +81,16 @@
   padding: 8px 10px;
   border-radius: 10px;
   font-weight: 600;
+  transition: all 0.2s;
 }
 
-.nx-link:hover {
-  background: #f3f6fb;
-}
-
+/* Estilo para resaltar en qué sección de la SPA se encuentra el usuario */
 .nx-link-active {
   background: #eef2ff;
   color: #1d4ed8;
 }
 
-.nx-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nx-user {
-  max-width: 160px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  opacity: 0.9;
-  font-weight: 600;
-}
-
-/* Buttons */
+/* ====== COMPONENTES DE INTERACCIÓN (BOTONES) ====== */
 .nx-btn {
   border: 1px solid #e8edf5;
   background: #fff;
@@ -112,28 +98,19 @@
   border-radius: 12px;
   cursor: pointer;
   font-weight: 700;
-}
-
-.nx-btn:hover {
-  background: #f8fafc;
+  font-family: inherit;
 }
 
 .nx-btn-primary {
+  /* Estilo principal de Nexus basado en los colores corporativos */
   background: #1d4ed8;
   border-color: #1d4ed8;
   color: #fff;
 }
 
-.nx-btn-primary:hover {
-  background: #1e40af;
-}
-
-.nx-btn-ghost {
-  background: #fff;
-}
-
-/* Burger (mobile) */
+/* ====== NAVEGACIÓN MÓVIL (MENÚ HAMBURGUESA) ====== */
 .nx-burger {
+  /* El botón hamburguesa solo aparece cuando la pantalla es pequeña (Criterio 1) */
   display: none;
   width: 42px;
   height: 42px;
@@ -141,7 +118,6 @@
   border: 1px solid #e8edf5;
   background: #fff;
   cursor: pointer;
-  padding: 10px;
 }
 
 .nx-burger span {
@@ -152,7 +128,7 @@
   border-radius: 10px;
 }
 
-/* Mobile nav dropdown */
+/* Menú desplegable para la versión de teléfono */
 .nx-nav-mobile {
   border-bottom: 1px solid #e8edf5;
   background: #fff;
@@ -164,15 +140,7 @@
   gap: 8px;
 }
 
-.nx-link-mobile {
-  padding: 10px 12px;
-}
-
-.nx-mobile-logout {
-  margin-top: 8px;
-}
-
-/* ====== Footer ====== */
+/* ====== FOOTER ====== */
 .nx-footer {
   border-top: 1px solid #e8edf5;
   background: #fff;
@@ -183,20 +151,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
 }
 
-/* ====== Responsive ====== */
+/* ====== RESPONSIVIDAD (Criterio 1 y 2) ====== */
+
+/* Ajuste para móviles y tabletas: ocultamos el menú extendido y activamos el compacto */
 @media (max-width: 900px) {
   .nx-nav-desktop {
     display: none;
   }
+  
   .nx-burger {
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
+
   .nx-user {
+    /* Ocultamos el nombre del usuario en móviles para ganar espacio en la Navbar */
     display: none;
   }
 }

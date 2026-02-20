@@ -4,15 +4,17 @@ import ReserveModal from '../components/coworking/ReserveModal';
 import WeeklyCalendar from '../components/coworking/WeeklyCalendar';
 import FloorPlan from '../components/coworking/FloorPlan';
 
+/* Decidí agrupar estas pruebas para verificar que los componentes críticos 
+  del área de Coworking funcionen correctamente tras los cambios de la Actividad 3.*/
 describe('Pruebas funcionales de Coworking - Nexus', () => {
 
-  // Test 1: Renderizado del Modal
+  /* Verifico que el modal de reserva sea accesible y cargue su contenido básico */
   test('1. Debe mostrar el encabezado "Reservar" al abrir el modal', () => {
     render(<ReserveModal open={true} summary="Mesa 01" onClose={() => {}} />);
     expect(screen.getByText(/Reservar/i)).toBeInTheDocument();
   });
 
-  // Test 2: Cierre del Modal
+  /* Compruebo que la interacción para cerrar el modal funcione, algo vital para la usabilidad */
   test('2. Debe ejecutar la función onClose al hacer clic en Cancelar', () => {
     const mockClose = vi.fn();
     render(<ReserveModal open={true} onClose={mockClose} />);
@@ -20,7 +22,8 @@ describe('Pruebas funcionales de Coworking - Nexus', () => {
     expect(mockClose).toHaveBeenCalled();
   });
 
-  // Test 3: Visualización del Calendario
+  /* Como parte de la lógica de agenda solicitada, testeo que el calendario 
+    se renderice con los días configurados. */
   test('3. Debe renderizar las columnas de los días de la semana', () => {
     const mockAgenda = { franjas: [], dias: ["LUN", "MAR", "MIE"] };
     render(<WeeklyCalendar agenda={mockAgenda} />);
@@ -28,7 +31,8 @@ describe('Pruebas funcionales de Coworking - Nexus', () => {
     expect(screen.getByText('MIE')).toBeInTheDocument();
   });
 
-  // Test 4: Selección de espacio en el Plano
+  /* Esta prueba es clave para el Criterio de reserva: verifico que al hacer clic 
+    en un espacio del plano (como la Sala VIP), la aplicación reaccione correctamente. */
   test('4. Debe llamar a la función de selección al tocar un espacio del plano', () => {
     const mockSelect = vi.fn();
     const mockGrouped = { salas: [{ id: 1, nombre: 'Sala VIP' }], mesas: [], cabinas: [] };
@@ -37,7 +41,8 @@ describe('Pruebas funcionales de Coworking - Nexus', () => {
     expect(mockSelect).toHaveBeenCalled();
   });
 
-  // Test 5: Leyenda de colores
+  /* Verifico la leyenda de disponibilidad para asegurar que el usuario 
+    entienda visualmente qué espacios están libres u ocupados. */
   test('5. Debe mostrar los indicadores de disponibilidad (Libre/Ocupado)', () => {
     const mockAgenda = { franjas: [], dias: [] };
     render(<WeeklyCalendar agenda={mockAgenda} />);

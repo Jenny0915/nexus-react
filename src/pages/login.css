@@ -1,0 +1,106 @@
+/* Ajustes realizados para la interfaz de acceso de Nexus */
+
+.login-page {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: calc(100vh - 160px) !important; 
+  background-color: #f8fafc !important;
+  padding: 0 20px !important;
+}
+
+.login-card {
+  /* Se aplicó un diseño de rejilla (Grid) para separar el formulario de la ilustración */
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  background: white !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+  max-width: 850px !important;
+  width: 100% !important;
+  max-height: 500px !important; 
+  border: 1px solid #e2e8f0 !important;
+}
+
+.login-section-text {
+  padding: 40px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.login-title {
+  color: #1e293b !important;
+  font-size: 1.8rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 8px !important;
+}
+
+.login-subtitle {
+  color: #64748b !important;
+  font-size: 0.9rem !important;
+  margin-bottom: 25px !important;
+}
+
+.login-form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 15px !important;
+}
+
+.input-group label {
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  color: #334155 !important;
+  margin-bottom: 5px !important;
+  display: block;
+}
+
+.input-group input {
+  width: 100% !important;
+  padding: 10px 14px !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  font-size: 0.95rem !important;
+  box-sizing: border-box !important;
+}
+
+.btn-login-submit {
+  background-color: #1d4ed8 !important;
+  color: white !important;
+  padding: 12px !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: background 0.3s !important;
+}
+
+.login-section-image {
+  background-color: #e2eff7 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 20px !important;
+}
+
+.login-section-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05)) !important;
+}
+
+/* --- REQUERIMIENTO DE RESPONSIVIDAD (Criterio 1 y 2) --- */
+@media (max-width: 768px) {
+  .login-card {
+    /* En dispositivos móviles, elimino las dos columnas para que el formulario ocupe todo el ancho */
+    grid-template-columns: 1fr !important;
+    max-height: none !important;
+  }
+  .login-section-image {
+    /* Oculto la ilustración en pantallas pequeñas para priorizar el acceso del usuario */
+    display: none !important;
+  }
+}

@@ -1,6 +1,4 @@
-/* ==========================================================================
-   VARIABLES Y ESTILOS BASE
-   ========================================================================== */
+/* VARIABLES Y ESTILOS BASE */
 :root {
   --text: #1A1A1A;
   --border: #e8edf5;
@@ -14,7 +12,7 @@
   --libre: #16A34A;
   --ocupado: #EF4444;
 
-  /* Colores corporativos Nexus */
+  /* Colores Nexus */
   --nexus-dark: #1e3a8a;
   --nexus-light: #f3f4f6;
 
@@ -44,9 +42,7 @@
   align-items: stretch;
 }
 
-/* ==========================================================================
-   PANELES (CONTENEDORES PRINCIPALES)
-   ========================================================================== */
+/* PANELES (CONTENEDORES PRINCIPALES)  */
 .panel {
   background: #fff;
   border: 1px solid var(--border);
@@ -65,9 +61,7 @@
   font-weight: 900;
 }
 
-/* ==========================================================================
-   PLANO DEL ESPACIO (GRID DISTRIBUCIÓN)
-   ========================================================================== */
+/* PLANO DEL ESPACIO (GRID DISTRIBUCIÓN) */
 .plan-grid {
   display: grid;
   gap: 10px;
@@ -107,16 +101,14 @@
 .space-card:disabled { opacity: .55; cursor: not-allowed; border-color: rgba(0,0,0,.25); }
 .space-card.is-selected { outline: 3px solid rgba(108,141,199,.45); outline-offset: 2px; }
 
-/* Sub-grid de Mesas */
+/* Sub-grid pequeñito de Mesas */
 .mesas { padding: 9px; cursor: default; display: flex; flex-direction: column; gap: 7px; }
 .mesas-title { font-weight: 900; font-size: .98rem; text-align: center; }
 .mesas-grid { display: grid; gap: 7px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .mesa-btn { border: 2px solid var(--personal); background: #fff; border-radius: 8px; padding: 7px 6px; font-weight: 900; cursor: pointer; font-size: .82rem; }
 .mesa-btn.is-selected { outline: 3px solid rgba(108,141,199,.45); outline-offset: 2px; }
 
-/* ==========================================================================
-   CALENDARIO SEMANAL
-   ========================================================================== */
+/* CALENDARIO SEMANAL */
 .calendar-board { overflow-x: auto; padding-bottom: 6px; flex: 1; }
 
 .days-row, .calendar-grid { 
@@ -149,9 +141,7 @@
 .slot.busy { border-color: var(--ocupado); cursor: default; }
 .slot.na { opacity: .5; cursor: not-allowed; }
 
-/* ==========================================================================
-   LEYENDAS (CON PUNTOS DE COLOR)
-   ========================================================================== */
+/* LEYENDAS (CON PUNTOS DE COLOR) */
 .legend { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,.08); }
 
 .legend-pill { 
@@ -165,9 +155,7 @@
 .dot-libre { background-color: var(--libre); }
 .dot-ocupado { background-color: var(--ocupado); }
 
-/* ==========================================================================
-   MODAL Y BOTONES (REFINAMIENTO NEXUS)
-   ========================================================================== */
+/* MODAL Y BOTONES */
 .modal-backdrop {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center;
@@ -197,7 +185,7 @@
   font-family: inherit; font-size: 1rem; width: 100%;
 }
 
-/* BOTONES DEL MODAL - ESTILO NEXUS REFORZADO */
+/* BOTONES DEL MODAL - ESTILO NEXUS */
 .modal-actions { 
   display: flex; 
   justify-content: flex-end; 
@@ -214,7 +202,6 @@
   transition: all 0.2s ease;
   font-family: inherit;
   outline: none;
-  /* Eliminar estilos por defecto de botones de navegador */
   -webkit-appearance: none;
   appearance: none;
 }
@@ -246,36 +233,33 @@
   box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
 }
 
-/* ==========================================================================
-   RESPONSIVIDAD TOTAL (Móviles y Tablets)
-   ========================================================================== */
+/* RESPONSIVIDAD TOTAL (Móviles y Tablets) */
 
 @media (max-width: 1024px) {
   .reservas-wrap { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 767px) {
-  /* 1. Ajuste del Plano (Lo que ya tenías) */
+  /* 1. Ajuste del Plano */
   .plan-grid {
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
       "zona zona" "sala1 sala1" "mesas cabina1" "mesas cabina2" "sala2 sala2";
   }
 
-  /* 2. AJUSTE CLAVE: Calendario sin scroll (Criterio 1) */
   :root {
-    --cal-time-col: 35px; /* Achicamos la columna de la hora */
-    --cal-day-col: 1fr;   /* Los días se reparten el ancho restante */
+    --cal-time-col: 35px; 
+    --cal-day-col: 1fr;   
   }
 
   .days-row, .calendar-grid { 
-    min-width: 0 !important; /* Eliminamos cualquier restricción de ancho */
+    min-width: 0 !important; 
     width: 100%;
     gap: 2px; 
   }
 
   .day-pill {
-    font-size: 0.6rem; /* Texto pequeño para que no se amontone */
+    font-size: 0.6rem; 
     padding: 4px 0;
   }
 

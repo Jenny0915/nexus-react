@@ -6,14 +6,11 @@ import { useApi } from "../hooks/useApi";
 export default function SpaceDetail() {
   const { id } = useParams();
 
-  // 1) DETALLE DEL ESPACIO (GET /coworkingnew/spaces/:id)
      
   const { data, loading, error } = useApi(
     () => api.get(`/coworkingnew/spaces/${id}`),
     [id]
   );
-
-  // 2) POST RESERVA (demo)
 
   const [desde, setDesde] = useState("2025-12-01T09:00:00Z");
   const [hasta, setHasta] = useState("2025-12-01T10:00:00Z");

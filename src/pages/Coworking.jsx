@@ -35,7 +35,7 @@ export default function Coworking() {
                 <strong>{s.ocupado ? "Ocupado" : "Libre"}</strong>
               </div>
 
-              {/* ===== INFO DE OCUPACIÓN ===== */}
+              {}
               <div style={{ marginTop: 6, fontSize: 14 }}>
                 {!s.ocupado && (
                   <span style={{ color: "green" }}>
